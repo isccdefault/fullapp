@@ -1,8 +1,8 @@
 package com.boz.my222;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,12 +34,7 @@ public class MainActivity extends AppCompatActivity {
             webSettings.setJavaScriptEnabled(true);  //这句话必须保留。。不解释
             webSettings.setDomStorageEnabled(true);//这句话必须保留。。否则无法播放优酷视频网页。。其他的可以
             webSettings.setMediaPlaybackRequiresUserGesture(false);
-            webView.setWebChromeClient(new WebChromeClient(){
-                @Override
-                public Bitmap getDefaultVideoPoster() {
-                    return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-                }
-            });//重写一下。有的时候可能会出现问题
+            webView.setWebChromeClient(new WebChromeClient());//重写一下。有的时候可能会出现问题
             webView.setWebViewClient(new WebViewClient(){//不写的话自动跳到默认浏览器了。。跳出APP了。。怎么能不写？
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {//这个方法必须重写。否则会出现优酷视频周末无法播放。周一-周五可以播放的问题
                     if(url.startsWith("intent")||url.startsWith("youku")){
@@ -51,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
             });
 
             webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+            webView.setBackgroundColor(ContextCompat.getColor(this,android.R.color.transparent));
+            webView.setBackgroundResource(R.color.purple_700);
             //webView.loadUrl("http://192.168.43.32:8089/statistics.html");
             //webView.loadUrl("http://192.168.43.212:8074/screen3/index");
             //webView.loadUrl("http://192.168.1.202:8074/screen3/index");
